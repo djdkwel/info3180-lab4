@@ -12,18 +12,29 @@ img{
     background-color: green;
     height:50%;
     text-align: center;
+    color: white
 }
+
 .box{
     display: flex;
     flex-direction: column;
-    text-align: center;
+    justify-content:center;
+    
 }
 .info{
     display: flex;
-    flex: 1;
-    text-align: center;
+    justify-content: center;
+    padding: 55px;
+    
 }
 button{
     height: 40px;
     width:60px;
+    background-color: green;
+    color: white
+    
+}
+#bottom{
+    padding: 0 100px;
+    
 }

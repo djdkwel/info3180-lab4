@@ -4,7 +4,7 @@ Jinja2 Documentation:    http://jinja.pocoo.org/2/documentation/
 Werkzeug Documentation:  http://werkzeug.pocoo.org/documentation/
 This file creates your application.
 """
-
+import datetime
 from app import app
 from flask import render_template, request, redirect, url_for, flash
 
@@ -12,6 +12,11 @@ from flask import render_template, request, redirect, url_for, flash
 ###
 # Routing for your application.
 ###
+def format_date_joined():
+    now = datetime.datetime.now() # today's date
+    date_joined = datetime.date(2019, 2, 7) # a specific date
+    return "Joined "  + date_joined.strftime("%B, %Y")
+    
 
 @app.route('/')
 def home():
@@ -49,7 +54,9 @@ def add_header(response):
 
 @app.route('/profile')
 def profile():
-    return render_template('profile.html')
+    datejoined=format_date_joined()
+    return render_template('profile.html', date = datejoined)
+    #return render_template('profile.html')
     
 @app.errorhandler(404)
 def page_not_found(error):
