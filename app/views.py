@@ -47,7 +47,10 @@ def add_header(response):
     response.headers['Cache-Control'] = 'public, max-age=0'
     return response
 
-
+@app.route('/profile')
+def profile():
+    return render_template('profile.html')
+    
 @app.errorhandler(404)
 def page_not_found(error):
     """Custom 404 page."""
