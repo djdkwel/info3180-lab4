@@ -4,19 +4,18 @@ Jinja2 Documentation:    http://jinja.pocoo.org/2/documentation/
 Werkzeug Documentation:  http://werkzeug.pocoo.org/documentation/
 This file creates your application.
 """
-import datetime
+'''import datetime
 from app import app
-from flask import render_template, request, redirect, url_for, flash
-
+from flask import render_template, request, redirect, url_for,flash'''
+import os
+from app import app
+from flask import render_template, request, redirect, url_for, flash, session, abort
+from werkzeug.utils import secure_filename
+from app.forms import UploadForm
 
 ###
 # Routing for your application.
 ###
-def format_date_joined():
-    now = datetime.datetime.now() # today's date
-    date_joined = datetime.date(2019, 2, 7) # a specific date
-    return "Joined "  + date_joined.strftime("%B, %Y")
-    
 
 @app.route('/')
 def home():
@@ -28,8 +27,31 @@ def home():
 def about():
     """Render the website's about page."""
     return render_template('about.html', name="Mary Jane")
-
-
+    
+@app.route('/profile')
+def profile():
+    form = UploadForm()
+    
+    if request.method == 'POST':
+        if form.validate_on_submit(): 
+            firstname = form.firstname.data
+            lastname = form.lastname.data
+            email = form.email.data
+            location = form.location.data
+            photo = form.photo.data
+            biography=form.biography.data
+            flash('You have successfully filled out the form', 'success')  
+            return render_template('result.html', firstname=firstname, lastname=lastname,email=email,location=location, biography=biography,photo=photo)
+        flash_errors(form)
+    return render_template('profile.html', form=form)
+    
+@app.route('/profiles')
+def profiles():
+    return render_template('profiles.html')
+'''
+@app.route('/profile/<userid')
+def profile_userid():
+    return render_template('profile.html')'''
 ###
 # The functions below should be applicable to all Flask apps.
 ###
@@ -51,18 +73,25 @@ def add_header(response):
     response.headers['X-UA-Compatible'] = 'IE=Edge,chrome=1'
     response.headers['Cache-Control'] = 'public, max-age=0'
     return response
-
+'''
 @app.route('/profile')
 def profile():
     datejoined=format_date_joined()
     return render_template('profile.html', date = datejoined)
-    #return render_template('profile.html')
+    #return render_template('profile.html')'''
     
 @app.errorhandler(404)
 def page_not_found(error):
     """Custom 404 page."""
     return render_template('404.html'), 404
 
+def flash_errors(form):
+    for field, errors in form.errors.items():
+        for error in errors:
+            flash(u"Error in the %s field - %s" % (
+                getattr(form, field).label.text,
+                error
+            ), 'danger')
 
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0", port="8080")
