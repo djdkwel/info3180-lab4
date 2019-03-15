@@ -16,7 +16,7 @@ class UploadForm(FlaskForm):
     lastname = StringField('lastname',validators=[DataRequired()])
     email = StringField('email',validators=[DataRequired(),Email()])
     location = StringField('location',validators=[DataRequired()])
-    gender = SelectField('gender',choices=['male','female'])
-    biograpy = TextAreaField('biograpy',validators=[DataRequired()])
+    gender = SelectField('gender',choices=[('male', 'Male'),('female', 'Female')])
+    biography = TextAreaField('biograpy',validators=[DataRequired()])
     photo = FileField('Photo', validators=[FileRequired(),FileAllowed(['jpg','png','Images only!'])])
 

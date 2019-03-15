@@ -1,37 +1,29 @@
 {%extends "base.html"%}
 {% block main %}
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-    <link rel="stylesheet" type="text/css" href="static/css/style.css">
-</head>
-  </head>
-  <body>
-    <div id = 'top' class='box'>
-      <img src="{{url_for('static',filename='me.jpg')}}">
-        <h2>Diandra Whittick</h2>
-        <p></p>@djdkwel<p>
-        <p>Kingston, Jamaica<p>
-        {{ date }}
-        
-    </div>
-    <div id = 'bottom' class = 'box'>
-        Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
-        sed diam nonummy nibh euismod tincidunt ut laoreet dolore
-        magna aliquam erat volutpat. Ut wisi enim ad minim veniam,
-        quis nostrud exerci tation ullamcorper suscipit lobortis nisl
-        ut aliquip ex ea commodo consequat. Duis autem vel eum iriure
-        <div class = 'info'>
-        <div><p>7</p> <p> Post   </p></div>
-        <div><p>100</p> <p> Following  </p></div>
-        <div><p>100</p> <p> Followers  </p></div>
-        
-        </div>
-     <button type = "submit">follow</button>
-    </div>
-   
-  </body>
-</html>
+<form method = 'post' action='{{url_for('profile')}}' enctype="multipart/form-data">
+  {{form.hidden_tag()}}
+  <div class = 'formUpload'>
+    {{form.firstname.label}} {{ form.firstname(class="form-control") }}
+  </div>
+  <div class = 'formUpload'>
+    {{form.lastname.label}} {{ form.lastname(class="form-control") }}
+  </div>
+  <div class = 'formUpload'>
+    {{form.email.label}} {{ form.email(class="form-control") }}
+  </div>
+  <div class = 'formUpload'>
+    {{form.location.label}} {{ form.location(class="form-control") }}
+  </div>
+  <div class = 'formUpload'>
+    {{form.gender.label}} {{ form.gender(class="form-control") }}
+  </div>
+  <div class = 'formUpload'>
+    {{form.biography.label}} {{ form.biography(class="form-control") }}
+  </div>
+  <div class = 'formUpload'>
+    {{form.photo.label}} {{ form.photo(class="form-control") }}
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
 {% endblock %}

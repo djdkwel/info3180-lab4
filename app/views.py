@@ -8,11 +8,11 @@ This file creates your application.
 from app import app
 from flask import render_template, request, redirect, url_for,flash'''
 import os
-from app import app
+from app import app,db
 from flask import render_template, request, redirect, url_for, flash, session, abort
 from werkzeug.utils import secure_filename
 from app.forms import UploadForm
-
+from app.models import UserProfile
 ###
 # Routing for your application.
 ###
@@ -28,26 +28,32 @@ def about():
     """Render the website's about page."""
     return render_template('about.html', name="Mary Jane")
     
-@app.route('/profile')
+@app.route('/profile',methods=['GET','POST'])
 def profile():
     form = UploadForm()
     
-    if request.method == 'POST':
-        if form.validate_on_submit(): 
-            firstname = form.firstname.data
-            lastname = form.lastname.data
-            email = form.email.data
-            location = form.location.data
-            photo = form.photo.data
-            biography=form.biography.data
-            flash('You have successfully filled out the form', 'success')  
-            return render_template('result.html', firstname=firstname, lastname=lastname,email=email,location=location, biography=biography,photo=photo)
-        flash_errors(form)
+    if request.method == 'POST' and form.validate_on_submit():
+        firstname = request.form['firstname']
+        lastname = request.form['lastname']
+        email = request.form['email']
+        location = request.form['location']
+        gender = request.form['gender']
+        biography = request.form['biography']
+        photo = form.photo.data
+        filename = secure_filename(photo.filename)
+        photo.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        user =  UserProfile(firstname,lastname,email,location,gender,biography,filename)
+        db.session.add(user)
+        db.session.commit()
+        flash('You have successfully filled out the form', 'success')  
+        redirect(url_for('profiles'))
+    flash_errors(form)
     return render_template('profile.html', form=form)
-    
+
 @app.route('/profiles')
 def profiles():
-    return render_template('profiles.html')
+    #Users = db.session.query(UserProfile).all()
+    return render_template('profiles.html')#,users=users)
 '''
 @app.route('/profile/<userid')
 def profile_userid():
