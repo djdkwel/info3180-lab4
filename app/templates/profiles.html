@@ -1,0 +1,27 @@
+{%extends "base.html"%}
+{%block main%}
+{%if users%}
+    
+    {% for user in users%}
+    <div>
+        <div>
+            <div class="column">
+                <div class = 'd' style="padding-right:55px;">
+                <img src="{{url_for('static',filename='uploads/'+user.filename)}}"style = "border-radius:50%;width:200px;height:200px"/>
+                <div class = 'column' style="justify-items: center;">
+                    <h5>{{user.firstname}}{{user.lastname}}</h5>
+                    <p>{{user.gender}}</p>
+                    <p>{{user.location}}</p>
+                </div>
+                </div>
+                <div class = 'column'>
+                    <div class='d' style="padding-top:55px;">
+                    <button"btn btn-primary" onclick="location.href='{{ url_for('profile', userid=user.id) }}'">View Profile</button>
+                </div>
+                </div>
+        </div>
+  
+    </div>
+      {%endfor%}
+      {%endif%}
+{% endblock %}

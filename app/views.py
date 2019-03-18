@@ -52,12 +52,13 @@ def profile():
 
 @app.route('/profiles')
 def profiles():
-    #Users = db.session.query(UserProfile).all()
-    return render_template('profiles.html')#,users=users)
-'''
-@app.route('/profile/<userid')
-def profile_userid():
-    return render_template('profile.html')'''
+    users = db.session.query(UserProfile).all()
+    return render_template('profiles.html', users=users)
+
+@app.route('/profiles/<userid>')
+def profile_userid(userid):
+    user=UserProfile.query.get(userid)
+    return render_template('userprofile.html',user=user)
 ###
 # The functions below should be applicable to all Flask apps.
 ###

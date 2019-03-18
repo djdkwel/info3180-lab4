@@ -14,7 +14,8 @@ class UserProfile(db.Model):
     gender = db.Column(db.String(80))
     biography = db.Column(db.String(255))
     filename = db.Column(db.String(80))
-    #created_date = db.Column(DateTime, default=datetime.datetime.utcnow)
+    #created_date = db.Column(db.Date())
+    
     
     def __init__ (self, firstname,lastname,email,location,gender,biography,filename):
 
@@ -24,9 +25,9 @@ class UserProfile(db.Model):
         self.biography = biography
         self.email = email
         self.location = location
-        #self.created_date = created_date
+        self.created_date = created_date
         self.filename = filename
-   
+       
     def is_authenticated(self):
         return True
 
