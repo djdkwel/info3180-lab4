@@ -6,7 +6,7 @@
             <div class ='primary-border' style="width: 500px; height: 350px;">
                 <div class = 'row'>
                     <div class ='column'>
-                        <img src="{{url_for('static, filename='uploads/'+user.photo)}}" style = "border-radius: 50%;"></img>
+                        <img src="{{url_for('static',filename='uploads/'+user.filename)}}"style = "border-radius:50%;width:200px;height:200px"/>
                     </div>
                     <div class = 'column' style='justify-items: center;'>
                         <h6>{{user.firstname}} {{user.lastname}}</h6>

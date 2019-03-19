@@ -1,6 +1,6 @@
 {%extends "base.html"%}
 {%block main%}
-{%if users%}
+
     
     {% for user in users%}
     <div>
@@ -16,12 +16,12 @@
                 </div>
                 <div class = 'column'>
                     <div class='d' style="padding-top:55px;">
-                    <button"btn btn-primary" onclick="location.href='{{ url_for('profile', userid=user.id) }}'">View Profile</button>
+                    <a class="btn btn-primary" href="{{ url_for('profile_userid',userid=user.id)}}">View Profile</a>
                 </div>
                 </div>
         </div>
   
     </div>
       {%endfor%}
-      {%endif%}
+     
 {% endblock %}
